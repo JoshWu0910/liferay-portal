@@ -5,6 +5,7 @@
 	.sidebar-header {
 		line-height: 32px;
 		padding-bottom: 10px;
+		padding-left: 9px;
 		padding-right: 9px;
 		padding-top: 12px;
 
@@ -15,12 +16,16 @@
 		}
 
 		.company-details {
-			display: flex;
+			float: left;
+		}
+
+		.company-logo{
+			float: left;
 		}
 
 		.company-name {
 			display: block;
-			max-width: 250px;
+			max-width: 220px;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
