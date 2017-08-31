@@ -44,6 +44,7 @@ public class ScopeFacetBuilder {
 			scopeFacet.setValues(
 				ListUtil.toLongArray(
 					Arrays.asList(_selectedSites), GetterUtil::getLong));
+System.out.println("20138 - _selectedSites" + Arrays.asList(_selectedSites));
 		}
 
 		return facet;

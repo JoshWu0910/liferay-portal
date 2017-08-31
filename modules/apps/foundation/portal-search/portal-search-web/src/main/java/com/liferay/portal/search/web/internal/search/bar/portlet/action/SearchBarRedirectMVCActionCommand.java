@@ -29,6 +29,7 @@ import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortle
 import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 
 import java.util.Optional;
+import java.util.Arrays;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -58,17 +59,25 @@ public class SearchBarRedirectMVCActionCommand extends BaseMVCActionCommand {
 		Optional<String> urlOptional = parameterValueOptional.map(
 			parameterValue -> _http.addParameter(
 				url, parameterName, parameterValue));
+// System.out.println("20138 http= " + urlOptional.getRequestURL()); //-----------------------------------------------------------------------
 
+System.out.println("20138 opturl = " + urlOptional.orElse(url)); //---------------------------------------------------------------------------
 		return urlOptional.orElse(url);
 	}
 
 	protected String addParameters(
 		String url, PortletRequest portletRequest, String... parameterNames) {
+System.out.println("20138 params= " + Arrays.asList(parameterNames)); //---------------------------------------------------------------------------
+System.out.println("20138 portletRequest = " + portletRequest.getParameterMap()); //---------------------------------------------------------------------------
+System.out.println("20138 portletRequest = " + Arrays.toString(portletRequest.getParameterValues("javax.portlet.action"))); //-------------------------------------------------
+
+		// String currentURLstuff = PortalUtil.getCurrentCompleteURL(portletRequest);
+		// System.out.println(currentURLstuff);
 
 		for (String parameterName : parameterNames) {
 			url = addParameter(url, portletRequest, parameterName);
 		}
-
+System.out.println("20138 url= " + url); //---------------------------------------------------------------------------
 		return url;
 	}
 
@@ -77,6 +86,11 @@ public class SearchBarRedirectMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+ThemeDisplay themeDisplay2 = getThemeDisplay(actionRequest);
+System.out.println("20138 URLPortal = " + themeDisplay2.getURLPortal());
+System.out.println("20138 URLcurrent = " + themeDisplay2.getURLCurrent());  //------------------------------------------------------------------
+
+System.out.println("20138 Action Reuqest = " + actionRequest.getParameterMap()); //---------------------------------------------------------------------------
 		hideDefaultSuccessMessage(actionRequest);
 
 		SearchBarPortletPreferences searchBarPortletPreferences =
@@ -88,9 +102,12 @@ public class SearchBarRedirectMVCActionCommand extends BaseMVCActionCommand {
 
 		redirectURL = addParameters(
 			redirectURL, actionRequest,
+			// "test1", "test2");
 			searchBarPortletPreferences.getKeywordsParameterName(),
 			searchBarPortletPreferences.getScopeParameterName());
-
+// This prints URL w/o site facet filters
+System.out.println("20138 reidrect " + portal.escapeRedirect(redirectURL)); //---------------------------------------------------------------------------
+// Final response sent to address bar
 		actionResponse.sendRedirect(portal.escapeRedirect(redirectURL));
 	}
 
@@ -111,7 +128,7 @@ public class SearchBarRedirectMVCActionCommand extends BaseMVCActionCommand {
 	protected String getRedirectURL(
 		ActionRequest actionRequest,
 		SearchBarPortletPreferences searchBarPortletPreferences) {
-
+System.out.println("20138 portlet prefs = " + searchBarPortletPreferences); //---------------------------------------------------------------------------
 		ThemeDisplay themeDisplay = getThemeDisplay(actionRequest);
 
 		String url = themeDisplay.getURLCurrent();
@@ -131,7 +148,7 @@ public class SearchBarRedirectMVCActionCommand extends BaseMVCActionCommand {
 	protected ThemeDisplay getThemeDisplay(ActionRequest actionRequest) {
 		ThemeDisplaySupplier themeDisplaySupplier =
 			new PortletRequestThemeDisplaySupplier(actionRequest);
-
+System.out.println("20138 theme supplier = " + themeDisplaySupplier.getThemeDisplay().getSiteGroup()); //---------------------------------------------------------------------------
 		return themeDisplaySupplier.getThemeDisplay();
 	}
 

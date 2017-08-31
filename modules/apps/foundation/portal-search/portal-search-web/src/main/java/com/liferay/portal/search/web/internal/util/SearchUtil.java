@@ -202,7 +202,7 @@ public class SearchUtil {
 					assetEntry, viewInContext, viewURL, currentURL,
 					themeDisplay);
 			}
-
+System.out.println("20138 viewcontnet - " + viewContentURL.toString());
 			return viewContentURL.toString();
 		}
 		catch (Exception e) {
