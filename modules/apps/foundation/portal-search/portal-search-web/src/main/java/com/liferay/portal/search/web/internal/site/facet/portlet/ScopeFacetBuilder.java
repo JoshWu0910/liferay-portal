@@ -44,10 +44,13 @@ public class ScopeFacetBuilder {
 			scopeFacet.setValues(
 				ListUtil.toLongArray(
 					Arrays.asList(_selectedSites), GetterUtil::getLong));
-System.out.println("20138 - _selectedSites" + Arrays.asList(_selectedSites));
 		}
 
 		return facet;
+	}
+
+	public static String[] getSelectedSites() {
+		return _selectedSites;
 	}
 
 	public void setFrequencyThreshold(int frequencyThreshold) {
@@ -88,6 +91,6 @@ System.out.println("20138 - _selectedSites" + Arrays.asList(_selectedSites));
 	private int _maxTerms;
 	private final ScopeFacetFactory _scopeFacetFactory;
 	private SearchContext _searchContext;
-	private String[] _selectedSites;
+	private static String[] _selectedSites;
 
 }
